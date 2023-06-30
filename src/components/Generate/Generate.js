@@ -1,22 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from './generate.module.css'
 import { MyContext } from "@/pages";
+import { dimensions } from "@/configs";
 function Generate() {
-  const [dimension, setDimension] = useState(2)
-  const [sample, setSample] = useState(4)
+  
   const [negativePrompt, setNegativePrompt] = useState('')
   const [prompt, setPrompt] = useState('')
-  
   const [inprogress, setInprogress] = useState(false)
 
-  const {setGeneratedImage} = useContext(MyContext)
-  const dimensions = [
-    {width:'640', height:'480'},
-    {width:'800', height:'600'},
-    {width:'800', height:'800'},
-    {width:'900', height:'600'},
-    {width:'1024', height:'1024'},
-  ]
+  const {setGeneratedImage, dimension, setDimension, sample, setSample} = useContext(MyContext)
+  
   const range1 = useRef('range1')
   const range2 = useRef('range2')
   if(range1.current.style){

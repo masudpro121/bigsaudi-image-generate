@@ -6,15 +6,15 @@ const axios = require("axios");
 
 export default function handler(req, res) {
   if(req.method == 'POST'){
-    const {sample, dimension, prompt, negativePrompt} = req.body
-    generate({sample, dimension, prompt, negativePrompt})
+    const {image, meta} = req.body
+    generate({image, meta})
     .then(result=>{
       res.json(result)
     })
     .catch(err=>{
-      console.log(req.body);
       console.log(err);
-      res.json({status:'something wrong'})
+      console.log(req.body);
+      res.send({status:"something wrong"})
     })
   }
 }
@@ -23,29 +23,26 @@ export default function handler(req, res) {
 
 
 
-const generate = ({sample, dimension, prompt, negativePrompt}) => {
+const generate = ({image, meta}) => {
   return new Promise((resolve, reject) => {
     axios
-      .post("https://stablediffusionapi.com/api/v3/text2img", {
+      .post("https://stablediffusionapi.com/api/v3/img2img", {
         key: STABLEDIFFUSION_KEY,
-        prompt: prompt,
-        negative_prompt: negativePrompt,
-        width: dimension.width,
-        height: dimension.height,
-        samples: sample,
-        num_inference_steps: "20",
+        prompt: meta.prompt || '',
+        negative_prompt: meta.negative_prompt,
+        init_image: image,
+        width: meta.W || "512",
+        height: meta.H || "512",
+        samples: meta.n_samples || "4",
+        num_inference_steps: "30",
         safety_checker: "no",
         enhance_prompt: "no",
+        guidance_scale: 0.5,
+        strength: 0.5,
         seed: null,
-        guidance_scale: 7.5,
-        multi_lingual: "no",
-        panorama: "no",
-        self_attention: "no",
-        upscale: "no",
-        embeddings_model: "embeddings_model_id",
         webhook: null,
-        track_id: null,
-      })
+        track_id: null
+    })
       .then((res) => {
         console.log('api called');
         if (res.data.status == "success") {
