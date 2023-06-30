@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from './generate.module.css'
+import { MyContext } from "@/pages";
 function Generate() {
   const [dimension, setDimension] = useState(2)
   const [sample, setSample] = useState(4)
   const [negativePrompt, setNegativePrompt] = useState('')
   const [prompt, setPrompt] = useState('')
+  
   const [inprogress, setInprogress] = useState(false)
 
+  const {setGeneratedImage} = useContext(MyContext)
   const dimensions = [
     {width:'640', height:'480'},
     {width:'800', height:'600'},
@@ -46,7 +49,8 @@ function Generate() {
     })
     .then(res=>res.json())
     .then(result=>{
-      console.log(result);
+      const {id, meta, output} = result
+      setGeneratedImage({id, meta, output})
       setInprogress(false)
     })
     .catch(err=>{
