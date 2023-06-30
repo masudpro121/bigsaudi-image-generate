@@ -8,11 +8,11 @@ function Generate() {
   const [inprogress, setInprogress] = useState(false)
 
   const dimensions = [
-    {width:'1152', height:'768'},
-    {width:'1088', height:'896'},
+    {width:'640', height:'480'},
+    {width:'800', height:'600'},
+    {width:'800', height:'800'},
+    {width:'900', height:'600'},
     {width:'1024', height:'1024'},
-    {width:'896', height:'1088'},
-    {width:'768', height:'1152'},
   ]
   const range1 = useRef('range1')
   const range2 = useRef('range2')
@@ -26,13 +26,33 @@ function Generate() {
   }
 
   const generateImage = () =>{
+    const server = window.location.origin
     setInprogress(true)
     setPrompt('')
     setNegativePrompt('')
-    console.log(prompt);
-    setInterval(()=>{
+    const data = {
+      sample, prompt, negativePrompt,
+      dimension: {
+        width: dimensions[dimension].width,
+        height: dimensions[dimension].height
+      }
+    }
+    fetch(server+'/api/generate-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      }, 
+      body: JSON.stringify(data)
+    })
+    .then(res=>res.json())
+    .then(result=>{
+      console.log(result);
       setInprogress(false)
-    },3000)
+    })
+    .catch(err=>{
+      setInprogress(false)
+      console.log(err);
+    })
   }
   return (
     <div className="flex gap-10 w-[90%] m-auto py-10">
@@ -46,6 +66,7 @@ function Generate() {
             className=" mt-1 mb-4 shadow overflow-y-hidden w-full bg-zinc-700 bg-opacity-60 border border-zinc-700 rounded-xl leading-relaxed text-sm px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-indigo-700 placeholder:opacity-50 min-h-[130px]"
             id="describe"
             placeholder="A beautiful girl"
+            value={prompt}
             onChange={e=>setPrompt(e.target.value)}
           />
         </div>
@@ -57,13 +78,14 @@ function Generate() {
             className="mt-1 shadow overflow-y-hidden w-full bg-zinc-700 bg-opacity-60 border border-zinc-700 rounded-xl leading-relaxed text-sm px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-indigo-700 placeholder:opacity-50 h-[40px]"
             id="negative"
             placeholder="text, blurry"
+            value={negativePrompt}
             onChange={e=>setPrompt(e.target.value)}
           />
         </div>
         <div>
           <button 
             className="bg-indigo-700 rounded-xl px-5 py-1 text-sm font-semibold mt-3 float-right disabled:bg-slate-400"
-            disabled={!(!inprogress && prompt.length>0)}
+            disabled={prompt.length < 1}
             onClick={generateImage}
           >
             Generate
