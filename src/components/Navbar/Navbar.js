@@ -3,7 +3,7 @@ import Logo from '@/assets/img/logo.svg'
 import Image from "next/image"
 function Navbar() {
   return (
-    <div className="flex justify-between py-4 px-7">
+    <div className="bg-dark flex justify-between py-4 px-7">
       <div>
         <Image src={Logo} alt="logo" />
       </div>
