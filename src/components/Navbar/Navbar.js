@@ -14,8 +14,8 @@ function Navbar() {
           <div>likes</div>
           <div>Account</div>
       </div>
-      <div>
-        <button className="bg-btn text-sm font-semibold py-1 px-3 rounded-md">Get Started</button>
+      <div >
+        <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">Get Started</button>
       </div>
     </div>
   )
