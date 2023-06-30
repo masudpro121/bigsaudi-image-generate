@@ -9,7 +9,9 @@
   transition: background 450ms ease-in;
   cursor: pointer;
 }
-
+.slider2 {
+  background: linear-gradient(to right, var(--btn-color) 0%, var(--btn-color) 50%, #fff 100%, #fff 100%);
+}
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from './generate.module.css'
 function Generate() {
   const [dimension, setDimension] = useState(2)
+  const [sample, setSample] = useState(4)
   const [negativePrompt, setNegativePrompt] = useState('')
   const [prompt, setPrompt] = useState('')
   const [inprogress, setInprogress] = useState(false)
@@ -13,10 +14,15 @@ function Generate() {
     {width:'896', height:'1088'},
     {width:'768', height:'1152'},
   ]
-  const slider1 = useRef('slider')
-  if(slider1.current.style){
+  const range1 = useRef('range1')
+  const range2 = useRef('range2')
+  if(range1.current.style){
     const percentage = (100/(dimensions.length-1))*(dimension)
-    slider1.current.style.background = `linear-gradient(to right, #373296 0%, #373296 ${percentage}%, #fff ${percentage}%, white 100%)`
+    range1.current.style.background = `linear-gradient(to right, #373296 0%, #373296 ${percentage}%, #fff ${percentage}%, white 100%)`
+  }
+  if(range2.current.style){
+    const percentage = 33*(sample-1)
+    range2.current.style.background = `linear-gradient(to right, #373296 0%, #373296 ${percentage}%, #fff ${percentage}%, white 100%)`
   }
 
   const generateImage = () =>{
@@ -66,14 +72,22 @@ function Generate() {
       </div>
 
       {/* Settings Part  */}
-      <div className="w-2/6  ring-1 ring-zinc-700 p-5 rounded-xl mt-7">
-        <div className="slidecontainer">
-          <label htmlFor="dimensions" className="opacity-60" > Dimensions </label>
-          <input id="dimension" ref={slider1} type="range" min="0" max={dimensions.length-1} value={dimension} 
+      <div className="w-2/6  ring-1 ring-zinc-700 p-5 rounded-xl mt-7 h-full">
+        <div >
+          <label htmlFor="dimension" className="opacity-60" > Dimensions </label>
+          <input id="dimension" ref={range1} type="range" min="0" max={dimensions.length-1} value={dimension} 
             className={`${styles.slider} `}
             onChange={e=>setDimension(e.target.value)}
           />
           <p className="text-center">{dimensions[dimension].width} x {dimensions[dimension].height}</p>
+        </div>
+        <div >
+          <label htmlFor="sample" className="opacity-60" > Samples </label>
+          <input id="sample" ref={range2} type="range" min="1" max="4" value={sample} 
+            className={`${styles.slider} ${styles.slider2} `}
+            onChange={e=>setSample(e.target.value)}
+          />
+          <p className="text-center">{sample}</p>
         </div>
       </div>
     </div>
