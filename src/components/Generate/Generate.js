@@ -6,9 +6,8 @@ function Generate() {
   
   const [negativePrompt, setNegativePrompt] = useState('')
   const [prompt, setPrompt] = useState('')
-  const [inprogress, setInprogress] = useState(false)
 
-  const {setGeneratedImage, dimension, setDimension, sample, setSample} = useContext(MyContext)
+  const {inprogress, setInprogress, setGeneratedImage, dimension, setDimension, sample, setSample} = useContext(MyContext)
   
   const range1 = useRef('range1')
   const range2 = useRef('range2')

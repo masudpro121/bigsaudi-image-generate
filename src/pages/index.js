@@ -10,12 +10,14 @@ export const MyContext = createContext()
 
 export default function Home() {
   const [generatedImage, setGeneratedImage] = useState({})
+  const [inprogress, setInprogress] = useState(false);
   const [dimension, setDimension] = useState(2)
   const [sample, setSample] = useState(4)
   const value = {
    generatedImage, setGeneratedImage,
    dimension, setDimension, 
-   sample, setSample
+   sample, setSample,
+   inprogress,setInprogress
   }
   return (
     <MyContext.Provider value={value}>
