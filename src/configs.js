@@ -7,3 +7,39 @@ export const dimensions = [
   {width:'900', height:'600'},
   {width:'1024', height:'1024'},
 ]
+
+export const packages = [
+  {
+    name: "Starter",
+    services: [
+      "1,000 fast generations per month.",
+      "No slow generations.",
+      "2 parallel fast generations.",
+      "Commercial license (solo)",
+      "Images are public.",
+    ],
+    price: 8,
+  },
+  {
+    name: "Pro",
+    services: [
+      "1,000 fast generations per month.",
+      "No slow generations.",
+      "2 parallel fast generations.",
+      "Commercial license (solo)",
+      "Images are public.",
+    ],
+    price: 15,
+  },
+  {
+    name: "Max",
+    services: [
+      "1,000 fast generations per month.",
+      "No slow generations.",
+      "2 parallel fast generations.",
+      "Commercial license (solo)",
+      "Images are public.",
+    ],
+    price: 25,
+  },
+];
