@@ -1,13 +1,23 @@
 import { packages } from "@/configs";
 import React from "react";
+import { useCookies } from "react-cookie";
 
 function index() {
+  const [cookies, setCookie, removeCookie] = useCookies(['my-cookie']);
+
   const handlePayment= (pack) =>{
-    fetch('http://localhost:3000/api/payment/create')
+    fetch('/api/payment/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify(pack)
+    })
     .then(res=>res.json())
     .then(res=>{
       console.log(res.session);
-      window.open(res.session.url)
+      window.location.href = res.session.url
+      setCookie('st-client-id',res.session.id)
     })
   }
   return (

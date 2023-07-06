@@ -1,26 +1,28 @@
-import { STRIPE_PRIVATE_KEY } from "@/configs";
+import { SERVER, STRIPE_PRIVATE_KEY } from "@/configs";
 
 const stripe = require('stripe')(STRIPE_PRIVATE_KEY)
 
 
 export default async function handler(req, res){
-  if(req.method == 'GET'){
+  const {name, price, services} = req.body
+  if(req.method == 'POST'){
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'T-shirt',
+              name: name,
+              description:  services.join('\n')
             },
-            unit_amount: 2000,
+            unit_amount: 100 * price,
           },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
+      success_url: SERVER+'/billing/success',
+      cancel_url: SERVER+'/billing/cancel',
     });
 
      res.send({status:'ok', session})

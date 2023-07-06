@@ -9,7 +9,7 @@ function Navbar() {
         <Image src={Logo} alt="logo" />
       </div>
       <div className="flex gap-5">
-          <div>Home</div>
+          <Link href="/">Home</Link>
           <Link href="/pricing">Pricing</Link>
           <div>History</div>
           <div>likes</div>
