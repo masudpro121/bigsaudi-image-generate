@@ -1,8 +1,8 @@
 import { MyContext } from "@/pages";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
-// import BlurImg from '@/assets/img/blur.jpg'
 import LoadingGif from '@/assets/img/loading.gif'
+import CustomImage from "../CustomImage/CustomImage";
 function ShowImages() {
   const { generatedImage, setGeneratedImage, inprogress, setInprogress } = useContext(MyContext);
   const [variantImages, setVariantImages] = useState({});
@@ -37,23 +37,11 @@ function ShowImages() {
     <div>
       <div className="px-10 flex gap-5 flex-wrap justify-center">
         {!inprogress && generatedImage.output &&
-          generatedImage.output.map((item, i) => {
+          generatedImage.output.toReversed().map((item, i) => {
             return (
               <div key={i}>
-                <Image
-                  className=" rounded-sm ring-2 ring-gray-400"
-                  src={item}
-                  width={300}
-                  height={200}
-                  alt="Picture of the author"
-                  onLoad={(e)=>console.log(e)}
-                />
-                <button
-                  onClick={() => generateVariant(item)}
-                  className="mt-2 py-1 rounded-sm bg-indigo-500 text-sm font-bold w-full"
-                >
-                  Variant {i + 1}
-                </button>
+                <CustomImage i={i} image={item} fn={generateVariant} />
+               
               </div>
             );
           })}

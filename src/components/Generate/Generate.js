@@ -75,7 +75,7 @@ function Generate() {
             id="negative"
             placeholder="text, blurry"
             value={negativePrompt}
-            onChange={e=>setPrompt(e.target.value)}
+            onChange={e=>setNegativePrompt(e.target.value)}
           />
         </div>
         <div>
