@@ -3,7 +3,12 @@ import React from "react";
 
 function index() {
   const handlePayment= (pack) =>{
-    console.log(pack);
+    fetch('http://localhost:3000/api/payment/create')
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res.session);
+      window.open(res.session.url)
+    })
   }
   return (
     <>

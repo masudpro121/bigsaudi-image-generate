@@ -1,5 +1,7 @@
 export const STABLEDIFFUSION_KEY = process.env.STABLEDIFFUSION_KEY
 export const SERVER = process.env.SERVER
+export const STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY
+export const STRIPE_PRIVATE_KEY = process.env.STRIPE_PRIVATE_KEY
 export const dimensions = [
   {width:'640', height:'480'},
   {width:'800', height:'600'},
@@ -14,7 +16,6 @@ export const packages = [
     services: [
       "1,000 fast generations per month.",
       "No slow generations.",
-      "2 parallel fast generations.",
       "Commercial license (solo)",
       "Images are public.",
     ],
@@ -23,10 +24,9 @@ export const packages = [
   {
     name: "Pro",
     services: [
-      "1,000 fast generations per month.",
+      "2,000 fast generations per month.",
       "No slow generations.",
-      "2 parallel fast generations.",
-      "Commercial license (solo)",
+      "Commercial license ",
       "Images are public.",
     ],
     price: 15,
@@ -34,11 +34,10 @@ export const packages = [
   {
     name: "Max",
     services: [
-      "1,000 fast generations per month.",
+      "3,000 fast generations per month.",
       "No slow generations.",
-      "2 parallel fast generations.",
-      "Commercial license (solo)",
-      "Images are public.",
+      "Commercial license",
+      "Images are private.",
     ],
     price: 25,
   },
