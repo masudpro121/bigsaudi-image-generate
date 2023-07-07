@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
-import { useCookies } from "react-cookie";
 function success() {
-  const [cookies, setCookie, removeCookie] = useCookies(['my-cookie']);
   useEffect(()=>{
-    fetch('/api/payment/verify?id='+cookies['st-client-id'])
+    fetch('/api/payment/verify')
     .then(res=>res.json())
     .then(res=>{
       console.log(res.status);

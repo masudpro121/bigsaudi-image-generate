@@ -1,16 +1,19 @@
 import { MyContext } from "@/pages/_app";
 import Signin from "@/pages/signin";
 import { useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 const withAuth = Component => {
   const Auth = (props) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['cookie']);
     const [isLoggedIn, setIsLoggedIn] = useState("null")
-    const {user:{ email}} = useContext(MyContext)
+    const {setUser} = useContext(MyContext)
     useEffect(()=>{
-      if(email){
+      setUser({name:cookies.name, email:cookies.email})
+      if(cookies.email){
         setIsLoggedIn(true)
       }
-      if(!email){
+      if(!cookies.email){
         setIsLoggedIn(false)
       }
     },[])

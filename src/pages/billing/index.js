@@ -1,3 +1,4 @@
+import withAuth from "@/HOCS/withAuth";
 import { packages } from "@/configs";
 import React from "react";
 import { useCookies } from "react-cookie";
@@ -57,4 +58,4 @@ function index() {
   );
 }
 
-export default index;
+export default withAuth(index);
