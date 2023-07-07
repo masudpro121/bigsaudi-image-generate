@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from './generate.module.css'
-import { MyContext } from "@/pages";
 import { dimensions } from "@/configs";
+import { MyContext } from "@/pages/_app";
 function Generate() {
   
   const [negativePrompt, setNegativePrompt] = useState('')

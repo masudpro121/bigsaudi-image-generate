@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Logo from '@/assets/img/logo.svg'
 import Image from "next/image"
 import Link from "next/link"
+import { MyContext } from "@/pages/_app"
 function Navbar() {
+  const {user:{email}} = useContext(MyContext)
   return (
     <div className="bg-dark flex justify-between py-4 px-7">
       <div>
@@ -10,15 +12,25 @@ function Navbar() {
       </div>
       <div className="flex gap-5">
           <Link href="/">Home</Link>
+          <Link href="/generate">Generate</Link>
           <Link href="/billing">Billing</Link>
-          <div>History</div>
-          <div>likes</div>
-          <div>Account</div>
+          <Link href="/history">History</Link>
+          <Link href="/likes">Likes</Link>
       </div>
       <div >
-        <Link href="/signup">
+        {
+          !email && 
+          <Link href="/signin">
           <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">Get Started</button>
         </Link>
+        }
+        {
+          email && 
+          <Link href="/account">
+          <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">Account</button>
+        </Link>
+        }
+        
         
       </div>
     </div>

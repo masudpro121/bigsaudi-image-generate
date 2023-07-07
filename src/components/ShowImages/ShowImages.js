@@ -1,8 +1,8 @@
-import { MyContext } from "@/pages";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import LoadingGif from '@/assets/img/loading.gif'
 import CustomImage from "../CustomImage/CustomImage";
+import { MyContext } from "@/pages/_app";
 function ShowImages() {
   const { generatedImage, setGeneratedImage, inprogress, setInprogress } = useContext(MyContext);
   const [variantImages, setVariantImages] = useState({});

@@ -1,10 +1,13 @@
+import Link from "next/link";
 import React, { useContext, useState } from 'react'
 import { useCookies } from "react-cookie";
+import { MyContext } from "./_app";
 
-function signup() {
+function Signin() {
   const [cookies, setCookie, removeCookie] = useCookies(['cookie']);
   const [email, setEmail]  = useState('')
   const [password, setPassword]  = useState('')
+  const {setUser} = useContext(MyContext)
   const handleSignin = (e) =>{
     e.preventDefault()
     fetch('/api/auth/signin', {
@@ -21,6 +24,8 @@ function signup() {
       setCookie("token", res.token)
       setCookie("name", res.name)
       setCookie("email", res.email)
+      setUser({email: res.email, name: res.name})
+      window.location.href = "/"
     })
   }
   return (
@@ -35,8 +40,14 @@ function signup() {
         <button className=" bg-indigo-700 text-white px-2 ">Submit</button>
        </div>
       </form>
+      <div className="flex justify-center gap-2">
+        <p>Don't have an account?</p>
+        <p className=" text-indigo-400">
+          <Link href="/signup">Signup</Link>
+        </p>
+      </div>
     </div>
   )
 }
 
-export default signup
+export default Signin
