@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { SERVER, STRIPE_PRIVATE_KEY } from "@/configs";
 
 const stripe = require('stripe')(STRIPE_PRIVATE_KEY)

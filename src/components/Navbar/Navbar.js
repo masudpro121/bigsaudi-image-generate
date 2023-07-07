@@ -10,13 +10,16 @@ function Navbar() {
       </div>
       <div className="flex gap-5">
           <Link href="/">Home</Link>
-          <Link href="/pricing">Pricing</Link>
+          <Link href="/billing">Billing</Link>
           <div>History</div>
           <div>likes</div>
           <div>Account</div>
       </div>
       <div >
-        <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">Get Started</button>
+        <Link href="/signup">
+          <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">Get Started</button>
+        </Link>
+        
       </div>
     </div>
   )
