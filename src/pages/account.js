@@ -15,9 +15,9 @@ function Account() {
     setUser({});
   };
   return (
-    <div className="flex justify-between mx-10 mt-2">
+    <div className="flex justify-between mx-10 mt-5">
         <>
-          <div>
+          <div className="[&>*]:mb-2">
             {
               name && <div>Name: {name}</div>
             }

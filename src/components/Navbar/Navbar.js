@@ -6,18 +6,17 @@ import { MyContext } from "@/pages/_app"
 function Navbar() {
   const {user:{email}, credit} = useContext(MyContext)
   return (
+    <>
     <div className="bg-dark flex justify-between py-4 px-7">
       <div>
-        <Link href="" as="/">
+        <Link href="/" >
           <Image src={Logo} alt="logo" />
         </Link>
       </div>
-      <div className="flex gap-5">
-          <Link href="" as="/">Home</Link>
+      <div className="hidden sm:flex gap-5 ">
+          <Link href="/">Home</Link>
           <Link href="/generate">Generate</Link>
           <Link href="/billing">Billing</Link>
-          <Link href="/history">History</Link>
-          <Link href="/likes">Likes</Link>
       </div>
       <div >
         {
@@ -35,9 +34,17 @@ function Navbar() {
         </Link>
         }
         
-        
       </div>
+      
     </div>
+    <div className=" sm:hidden bg-dark flex justify-center py-4 px-7">
+      <div className="flex flex-wrap justify-center gap-5 ">
+        <Link href="/" as="/">Home</Link>
+        <Link href="/generate">Generate</Link>
+        <Link href="/billing">Billing</Link>
+        </div>
+    </div>
+    </>
   )
 }
 

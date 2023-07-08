@@ -23,10 +23,10 @@ function index() {
   }
   return (
     <>
-     <div className="text-center my-10">
-        <h1 className="text-5xl font-semibold">Membership</h1>
+     <div className="text-center mt-10">
+        <h1 className="text-3xl sm:text-5xl font-semibold">Membership</h1>
       </div>
-      <div className="flex justify-center gap-7">
+      <div className="py-10 flex flex-wrap mx-10 justify-center gap-7">
       {packages.map((pack, i) => {
         return (
           <div key={pack.name+i} className=" bg-gray-950 p-5 rounded-md">

@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
 
 function cancel() {
-  useEffect(()=>{
-    console.log(window);
-  },[])
+ setTimeout(()=>{
+  window.location.href = "/billing"
+ },1000)
   return (
-    <div>cancel</div>
+    <div className=" h-[50vh] flex justify-center items-center">
+      <h1 className="text-5xl leading-normal font-bold text-center text-red-500">
+        Payment Cancelled
+      </h1>
+    </div>
   )
 }
 
