@@ -25,7 +25,7 @@ function Signin() {
       setCookie("name", res.name)
       setCookie("email", res.email)
       setUser({email: res.email, name: res.name})
-      window.location.href = "/"
+      window.location.href = "/generate"
     })
   }
   return (

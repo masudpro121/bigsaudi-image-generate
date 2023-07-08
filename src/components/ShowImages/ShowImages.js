@@ -3,6 +3,9 @@ import React, { useContext, useState } from "react";
 import LoadingGif from '@/assets/img/loading.gif'
 import CustomImage from "../CustomImage/CustomImage";
 import { MyContext } from "@/pages/_app";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function ShowImages() {
   const { generatedImage, setGeneratedImage, inprogress, setInprogress } = useContext(MyContext);
   const [variantImages, setVariantImages] = useState({});
@@ -24,7 +27,11 @@ function ShowImages() {
       .then((res) => res.json())
       .then((result) => {
         const { id, meta, output } = result;
-        setGeneratedImage({...generatedImage, output: [...generatedImage.output, ...output]});
+        if(output){
+          setGeneratedImage({...generatedImage, output: [...generatedImage.output, ...output]});
+        }else{
+          toast(result.message)
+        }
         setInprogress(false);
       })
       .catch((err) => {
@@ -34,6 +41,7 @@ function ShowImages() {
   };
 
   return (
+    <>
     <div>
       <div className="px-10 flex gap-5 flex-wrap justify-center">
         {!inprogress && generatedImage.output &&
@@ -54,6 +62,8 @@ function ShowImages() {
       </div>
      
     </div>
+    <ToastContainer position="bottom-right" />
+    </>
   );
 }
 

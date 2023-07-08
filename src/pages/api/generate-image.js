@@ -1,29 +1,43 @@
 import { STABLEDIFFUSION_KEY } from "@/configs";
+import dbConnect from "@/libs/dbConnect";
+import UserModel from "@/models/UserModel";
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 require("dotenv").config();
 const axios = require("axios");
 
-export default function handler(req, res) {
-  if(req.method == 'POST'){
-    const {sample, dimension, prompt, negativePrompt} = req.body
-    generate({sample, dimension, prompt, negativePrompt})
-    .then(result=>{
-      res.json(result)
-    })
-    .catch(err=>{
-      console.log(req.body);
-      console.log(err);
-      res.json({status:'something wrong'})
-    })
+export default async function handler(req, res) {
+  if (req.method == "POST") {
+    const { sample, dimension, prompt, negativePrompt } = req.body;
+    const email = req.cookies.email;
+    await dbConnect();
+    const user = await UserModel.findOne({ email });
+    if(user.credit < sample){
+      return res.send({status:'wrong', message: 'Not  enough credit'})
+    }
+    
+    generate({ sample, dimension, prompt, negativePrompt })
+      .then(async (result) => {
+        user.credit -= sample;
+        user
+          .save()
+          .then((saved) => {
+            res.json(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(req.body);
+        console.log(err);
+        res.json({ status: "something wrong" });
+      });
   }
 }
 
-
-
-
-
-const generate = ({sample, dimension, prompt, negativePrompt}) => {
+const generate = ({ sample, dimension, prompt, negativePrompt }) => {
+  console.log(prompt, 'called');
   return new Promise((resolve, reject) => {
     axios
       .post("https://stablediffusionapi.com/api/v3/text2img", {
@@ -47,40 +61,37 @@ const generate = ({sample, dimension, prompt, negativePrompt}) => {
         track_id: null,
       })
       .then((res) => {
-        console.log('api called');
+        console.log("api called");
         if (res.data.status == "success") {
-            console.log('success 1');
-            resolve(res.data);
-        }
-        else if (res.data.status == "processing") {
-          console.log('processing', res.id);
+          console.log("success 1");
+          resolve(res.data);
+        } else if (res.data.status == "processing") {
+          console.log("processing", res.id);
           const interval = setInterval(() => {
-            axios.post(
-              "https://stablediffusionapi.com/api/v4/dreambooth/fetch",
-              {
+            axios
+              .post("https://stablediffusionapi.com/api/v4/dreambooth/fetch", {
                 key: STABLEDIFFUSION_KEY,
                 request_id: res.data.id,
-              }
-            ).then(result=>{
-                if(result.data.status=="success"){
-                    console.log('success 2');
-                    resolve(result.data)
-                    clearInterval(interval)
+              })
+              .then((result) => {
+                if (result.data.status == "success") {
+                  console.log("success 2");
+                  resolve(result.data);
+                  clearInterval(interval);
                 }
-            })
-            .catch(err=>{
+              })
+              .catch((err) => {
                 console.log(err);
-            })
+              });
           }, 1000);
-        }else{
+        } else {
           console.log(res);
-          reject(res)
+          reject(res);
         }
       })
       .catch((err) => {
         console.log(err, "image generate error");
-        reject(err)
+        reject(err);
       });
   });
 };
-

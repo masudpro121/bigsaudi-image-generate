@@ -20,6 +20,7 @@ function signup() {
     })
       .then((res) => res.json())
       .then((res) => {
+        window.location.href = "/signin"
         console.log(res, "signup");
       });
   };

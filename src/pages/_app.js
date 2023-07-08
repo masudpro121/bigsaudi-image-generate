@@ -11,9 +11,17 @@ export default function App({ Component, pageProps }) {
   const [dimension, setDimension] = useState(0);
   const [sample, setSample] = useState(4);
   const [user, setUser] = useState({})
+  const [credit, setCredit] = useState(0)
   useEffect(()=>{
     setUser({name:cookies.name, email:cookies.email})
   },[])
+  useEffect(()=>{
+    fetch('/api/user')
+    .then(res=>res.json())
+    .then(res=>{
+      setCredit(res.user.credit)
+    })
+  }, [])
   const value = {
     generatedImage,
     setGeneratedImage,
@@ -23,7 +31,8 @@ export default function App({ Component, pageProps }) {
     setSample,
     inprogress,
     setInprogress,
-    user, setUser
+    user, setUser,
+    credit, setCredit
   };
   return (
     <MyContext.Provider value={value}>

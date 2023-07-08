@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { MyContext } from "@/pages/_app"
 function Navbar() {
-  const {user:{email}} = useContext(MyContext)
+  const {user:{email}, credit} = useContext(MyContext)
   return (
     <div className="bg-dark flex justify-between py-4 px-7">
       <div>
@@ -27,7 +27,9 @@ function Navbar() {
         {
           email && 
           <Link href="/account">
-          <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">Account</button>
+          <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">
+            Credit: {credit}
+          </button>
         </Link>
         }
         

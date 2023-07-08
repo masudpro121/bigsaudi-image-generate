@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from './generate.module.css'
 import { dimensions } from "@/configs";
 import { MyContext } from "@/pages/_app";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Generate() {
-  
   const [negativePrompt, setNegativePrompt] = useState('')
   const [prompt, setPrompt] = useState('')
-
   const {inprogress, setInprogress, setGeneratedImage, dimension, setDimension, sample, setSample} = useContext(MyContext)
   
   const range1 = useRef('range1')
@@ -42,7 +43,14 @@ function Generate() {
     .then(res=>res.json())
     .then(result=>{
       const {id, meta, output} = result
-      setGeneratedImage({id, meta, output})
+      if(output){
+        setGeneratedImage({id, meta, output})
+      }else{
+        toast(result.message);
+        setTimeout(()=>{
+          window.location.href="/billing"
+        },2000)
+      }
       setInprogress(false)
     })
     .catch(err=>{
@@ -51,6 +59,7 @@ function Generate() {
     })
   }
   return (
+    <>
     <div className="flex gap-10 w-[90%] m-auto py-10">
       {/* Generate Part  */}
       <div className="w-full">
@@ -109,6 +118,8 @@ function Generate() {
         </div>
       </div>
     </div>
+    <ToastContainer position="bottom-right" />
+    </>
   );
 }
 
