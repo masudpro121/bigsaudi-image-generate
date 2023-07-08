@@ -60,7 +60,7 @@ function Generate() {
   }
   return (
     <>
-    <div className="flex gap-10 w-[90%] m-auto py-10">
+    <div className=" flex flex-col-reverse sm:flex-row gap-10 w-[90%] m-auto py-10">
       {/* Generate Part  */}
       <div className="w-full">
         <div>
@@ -99,7 +99,7 @@ function Generate() {
       </div>
 
       {/* Settings Part  */}
-      <div className="w-2/6  ring-1 ring-zinc-700 p-5 rounded-xl mt-7 h-full">
+      <div className="w-full sm:w-2/6  ring-1 ring-zinc-700 p-5 rounded-xl mt-7 h-full">
         <div >
           <label htmlFor="dimension" className="opacity-60" > Dimensions </label>
           <input id="dimension" ref={range1} type="range" min="0" max={dimensions.length-1} value={dimension} 
