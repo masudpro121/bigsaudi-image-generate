@@ -8,10 +8,12 @@ function Navbar() {
   return (
     <div className="bg-dark flex justify-between py-4 px-7">
       <div>
-        <Image src={Logo} alt="logo" />
+        <Link href="" as="/">
+          <Image src={Logo} alt="logo" />
+        </Link>
       </div>
       <div className="flex gap-5">
-          <Link href="/">Home</Link>
+          <Link href="" as="/">Home</Link>
           <Link href="/generate">Generate</Link>
           <Link href="/billing">Billing</Link>
           <Link href="/history">History</Link>
@@ -28,7 +30,7 @@ function Navbar() {
           email && 
           <Link href="/account">
           <button className="bg-indigo-700 text-sm font-semibold py-1 px-3 rounded-md">
-            Credit: {credit}
+            Credit : {credit}
           </button>
         </Link>
         }
